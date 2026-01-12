@@ -4,7 +4,13 @@
  * SPDX-License-Identifier: MIT
  */
 
- #include <lvgl.h>
+#include <lvgl.h>
+
+#if LVGL_VERSION_MAJOR >= 9
+    #define LVGL_CF_INDEXED_1BIT   LV_COLOR_FORMAT_I1
+#else
+    #define LVGL_CF_INDEXED_1BIT   LV_IMG_CF_INDEXED_1BIT
+#endif
 
 #ifndef LV_ATTRIBUTE_MEM_ALIGN
 #define LV_ATTRIBUTE_MEM_ALIGN
@@ -12,12 +18,6 @@
 
 #ifndef LV_ATTRIBUTE_IMG_CONTROL
 #define LV_ATTRIBUTE_IMG_CONTROL
-#endif
-
-#if LVGL_VERSION_MAJOR >= 9
-    #define LVGL_CF_INDEXED_1BIT   LV_COLOR_FORMAT_I1
-#else
-    #define LVGL_CF_INDEXED_1BIT   LV_IMG_CF_INDEXED_1BIT
 #endif
 
 const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_CONTROL uint8_t control_map[] = {
@@ -158,6 +158,42 @@ const lv_img_dsc_t win_icon = {
   .header.h = 14,
   .data_size = 36,
   .data = win_map,
+};
+
+#ifndef LV_ATTRIBUTE_IMG_TUX
+#define LV_ATTRIBUTE_IMG_TUX
+#endif
+
+const LV_ATTRIBUTE_MEM_ALIGN LV_ATTRIBUTE_LARGE_CONST LV_ATTRIBUTE_IMG_TUX uint8_t tux_map[] = {
+    0xf8, 0xf8, 0xf8, 0xff, 	/*Color of index 0*/
+    0x01, 0x01, 0x01, 0x89, 	/*Color of index 1*/
+
+    0x87, 0x84,
+    0x8f, 0xc4,
+    0x8e, 0x44,
+    0x8f, 0x44,
+    0x88, 0x44,
+    0x8a, 0x44,
+    0x90, 0x24,
+    0x90, 0x34,
+    0xb0, 0x34,
+    0xa8, 0x74,
+    0xc0, 0x0c,
+    0xc4, 0x8c,
+    0x98, 0x64,
+    0xff, 0xfc,
+};
+
+const lv_img_dsc_t tux_icon = {
+    .header.cf = LVGL_CF_INDEXED_1BIT,
+#if LVGL_VERSION_MAJOR < 9
+    .header.always_zero = 0,
+    .header.reserved = 0,
+#endif
+    .header.w = 14,
+    .header.h = 14,
+    .data_size = 36,
+    .data = tux_map,
 };
 
 #ifndef LV_ATTRIBUTE_IMG_CMD

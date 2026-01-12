@@ -63,6 +63,12 @@ If you want to use MacOS modifier symbols instead of the Windows modifier symbol
 CONFIG_ZMK_DONGLE_DISPLAY_MAC_MODIFIERS=y
 ```
 
+Also if you want to use Linux modifier symbols:
+
+```ini
+CONFIG_ZMK_DONGLE_DISPLAY_LINUX_MODIFIERS=y
+```
+
 ### Layer name display
 
 To set the text alignment for the layer name:

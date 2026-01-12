@@ -75,6 +75,7 @@ struct modifier_symbol *modifier_symbols[] = {
     &ms_cmd,
     &ms_shift
 };
+
 #else
 LV_IMG_DECLARE(alt_icon);
 struct modifier_symbol ms_alt = {
@@ -82,6 +83,22 @@ struct modifier_symbol ms_alt = {
     .symbol_dsc = &alt_icon,
 };
 
+#if IS_ENABLED(CONFIG_ZMK_DONGLE_DISPLAY_LINUX_MODIFIERS)
+LV_IMG_DECLARE(tux_icon);
+struct modifier_symbol ms_tux = {
+    .modifier = MOD_LGUI | MOD_RGUI,
+    .symbol_dsc = &tux_icon,
+};
+
+struct modifier_symbol *modifier_symbols[] = {
+    // this order determines the order of the symbols
+    &ms_control,
+    &ms_tux,
+    &ms_alt,
+    &ms_shift
+};
+
+#else
 LV_IMG_DECLARE(win_icon);
 struct modifier_symbol ms_win = {
     .modifier = MOD_LGUI | MOD_RGUI,
@@ -90,12 +107,14 @@ struct modifier_symbol ms_win = {
 
 struct modifier_symbol *modifier_symbols[] = {
     // this order determines the order of the symbols
+    &ms_control,
     &ms_win,
     &ms_alt,
-    &ms_control,
     &ms_shift
 };
-#endif
+
+#endif /* IS_ENABLED(CONFIG_ZMK_DONGLE_DISPLAY_LINUX_MODIFIERS) */
+#endif /* IS_ENABLED(CONFIG_ZMK_DONGLE_DISPLAY_MAC_MODIFIERS) */
 
 #define NUM_SYMBOLS (sizeof(modifier_symbols) / sizeof(struct modifier_symbol *))
 
